@@ -1,9 +1,17 @@
 #!/bin/bash
 
+# Load environment variables from .env file
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+fi
+
 # Configuration
 SEARCH_QUERY="Just added! Skate Session 2 from Vans Skate Space 198"
 CHECK_INTERVAL=60  # seconds between checks
 PROCESSED_FILE="processed_emails.txt"
+
+# Set GOG account from .env for PM2 environment
+export GOG_ACCOUNT="${EVENTBRITE_EMAIL}"
 
 # Create processed emails file if it doesn't exist
 touch "$PROCESSED_FILE"
