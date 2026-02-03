@@ -1,0 +1,21 @@
+{
+  "name": "getvanstickets",
+  "version": "1.0.0",
+  "description": "Automated ticket purchasing for Vans Skate Space sessions",
+  "main": "purchaseTicket.js",
+  "scripts": {
+    "start": "./monitor.sh",
+    "test": "node purchaseTicket.js"
+  },
+  "keywords": [
+    "automation",
+    "puppeteer",
+    "eventbrite"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "puppeteer": "^22.0.0"
+  }
+}
