@@ -140,37 +140,37 @@ async function purchaseTicket(eventUrl) {
     let ticketSelected = false;
 
     // Try method 1: Stepper button
-    try {
-      // Look for General Admission ticket
-      const ticketNameElement = await frame.waitForSelector(
-        'div[data-testid="ticket-name-wrapper"]',
-        { timeout: 5000 },
-      );
+    // try {
+    //   // Look for General Admission ticket
+    //   const ticketNameElement = await frame.waitForSelector(
+    //     'div[data-testid="ticket-name-wrapper"]',
+    //     { timeout: 5000 },
+    //   );
 
-      if (ticketNameElement) {
-        const ticketText = await frame.evaluate(
-          (el) => el.textContent,
-          ticketNameElement,
-        );
-        console.log(`✅ Found ticket: ${ticketText}`);
+    //   if (ticketNameElement) {
+    //     const ticketText = await frame.evaluate(
+    //       (el) => el.textContent,
+    //       ticketNameElement,
+    //     );
+    //     console.log(`✅ Found ticket: ${ticketText}`);
 
-        // Click the increase button to add ticket
-        const increaseButton = await frame.waitForSelector(
-          'button[data-testid="eds-stepper-increase-button"]',
-          { timeout: 3000 },
-        );
+    //     // Click the increase button to add ticket
+    //     const increaseButton = await frame.waitForSelector(
+    //       'button[data-testid="eds-stepper-increase-button"]',
+    //       { timeout: 3000 },
+    //     );
 
-        if (increaseButton) {
-          await increaseButton.click();
-          console.log("✅ Clicked increase button to add 1 ticket");
-          await sleep(500);
-          await takeScreenshot(page, "04-after-quantity-select");
-          ticketSelected = true;
-        }
-      }
-    } catch (e) {
-      console.log("⚠️  Stepper button not found, trying dropdown selector...");
-    }
+    //     if (increaseButton) {
+    //       await increaseButton.click();
+    //       console.log("✅ Clicked increase button to add 1 ticket");
+    //       await sleep(500);
+    //       await takeScreenshot(page, "04-after-quantity-select");
+    //       ticketSelected = true;
+    //     }
+    //   }
+    // } catch (e) {
+    //   console.log("⚠️  Stepper button not found, trying dropdown selector...");
+    // }
 
     // Try method 2: Dropdown selector
     if (!ticketSelected) {
