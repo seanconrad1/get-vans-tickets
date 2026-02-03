@@ -137,6 +137,9 @@ async function purchaseTicket(eventUrl) {
 
     // Select ticket quantity if needed (in iframe context)
     console.log("🎟️  Selecting tickets...");
+    let ticketSelected = false;
+
+    // Try method 1: Stepper button
     try {
       // Look for General Admission ticket
       const ticketNameElement = await frame.waitForSelector(
@@ -162,10 +165,34 @@ async function purchaseTicket(eventUrl) {
           console.log("✅ Clicked increase button to add 1 ticket");
           await sleep(500);
           await takeScreenshot(page, "04-after-quantity-select");
+          ticketSelected = true;
         }
       }
     } catch (e) {
-      console.log("⚠️  Ticket quantity selector not found, proceeding...");
+      console.log("⚠️  Stepper button not found, trying dropdown selector...");
+    }
+
+    // Try method 2: Dropdown selector
+    if (!ticketSelected) {
+      try {
+        const dropdown = await frame.waitForSelector(
+          'select[data-automation*="ticket-quantity-selector"]',
+          { timeout: 3000 },
+        );
+
+        if (dropdown) {
+          await frame.evaluate((select) => {
+            select.value = "1";
+            select.dispatchEvent(new Event("change", { bubbles: true }));
+          }, dropdown);
+          console.log("✅ Selected 1 ticket from dropdown");
+          await sleep(500);
+          await takeScreenshot(page, "04-after-quantity-select");
+          ticketSelected = true;
+        }
+      } catch (e) {
+        console.log("⚠️  Dropdown selector not found either, proceeding...");
+      }
     }
     // Log all buttons in the iframe to help debug
     try {
