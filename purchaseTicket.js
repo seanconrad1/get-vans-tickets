@@ -263,7 +263,18 @@ async function purchaseTicket(eventUrl) {
 
     // Wait for form to appear after selecting ticket
     console.log("⏳ Waiting for form to load...");
-    await sleep(3000);
+
+    // Wait for the email field to appear instead of fixed sleep
+    try {
+      await frame.waitForSelector(
+        'input[data-automation="checkout-form-N-email"], input[id="buyer.N-email"], input[name="buyer.N-email"], input[type="email"]',
+        { timeout: 10000, visible: true },
+      );
+      console.log("✅ Form loaded - email field detected");
+    } catch (e) {
+      console.log("⚠️  Email field not detected, proceeding anyway...");
+    }
+
     await takeScreenshot(page, "05-form-loaded");
 
     // Fill in contact information (in iframe context)
