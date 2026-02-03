@@ -26,7 +26,7 @@ async function purchaseTicket(eventUrl) {
   const timestamp = Date.now();
   let screenshotCount = 0;
 
-  const takeScreenshot = async (page, name) => {
+  // const takeScreenshot = async (page, name) => {
     screenshotCount++;
     const filename = `${timestamp}-${screenshotCount.toString().padStart(2, "0")}-${name}.png`;
     const filepath = path.join(screenshotDir, filename);
@@ -55,7 +55,7 @@ async function purchaseTicket(eventUrl) {
 
     // Wait a bit for any redirects
     await sleep(2000);
-    await takeScreenshot(page, "01-initial-page");
+    // await takeScreenshot(page, "01-initial-page");
 
     // Look for "Register" or "Get Tickets" button
     console.log("🔍 Looking for ticket button...");
@@ -101,7 +101,7 @@ async function purchaseTicket(eventUrl) {
     }
 
     if (!ticketButton) {
-      await takeScreenshot(page, "ERROR-no-ticket-button");
+      // await takeScreenshot(page, "ERROR-no-ticket-button");
       throw new Error("Could not find ticket/register button");
     }
 
@@ -109,7 +109,7 @@ async function purchaseTicket(eventUrl) {
     console.log("🖱️  Clicking ticket button...");
     await ticketButton.click();
     await sleep(1000);
-    await takeScreenshot(page, "02-after-ticket-button-click");
+    // await takeScreenshot(page, "02-after-ticket-button-click");
 
     // Wait for iframe modal to appear
     console.log("⏳ Waiting for iframe modal to load...");
@@ -126,7 +126,7 @@ async function purchaseTicket(eventUrl) {
 
       if (frame) {
         console.log("✅ Switched to iframe context");
-        await takeScreenshot(page, "03-iframe-loaded");
+        // await takeScreenshot(page, "03-iframe-loaded");
       } else {
         throw new Error("Could not get iframe content");
       }
@@ -164,7 +164,7 @@ async function purchaseTicket(eventUrl) {
     //       await increaseButton.click();
     //       console.log("✅ Clicked increase button to add 1 ticket");
     //       await sleep(500);
-    //       await takeScreenshot(page, "04-after-quantity-select");
+          await takeScreenshot(page, "04-after-quantity-select");
     //       ticketSelected = true;
     //     }
     //   }
@@ -187,7 +187,7 @@ async function purchaseTicket(eventUrl) {
           }, dropdown);
           console.log("✅ Selected 1 ticket from dropdown");
           await sleep(500);
-          await takeScreenshot(page, "04-after-quantity-select");
+          // await takeScreenshot(page, "04-after-quantity-select");
           ticketSelected = true;
         }
       } catch (e) {
@@ -255,10 +255,10 @@ async function purchaseTicket(eventUrl) {
       }
 
       await sleep(2000);
-      await takeScreenshot(page, "05-after-checkout-click");
+      // await takeScreenshot(page, "05-after-checkout-click");
     } else {
       console.log("⚠️  Checkout button not found, proceeding to form fill...");
-      await takeScreenshot(page, "05-no-checkout-button");
+      // await takeScreenshot(page, "05-no-checkout-button");
     }
 
     // Wait for form to appear after selecting ticket
@@ -275,7 +275,7 @@ async function purchaseTicket(eventUrl) {
       console.log("⚠️  Email field not detected, proceeding anyway...");
     }
 
-    await takeScreenshot(page, "05-form-loaded");
+    // await takeScreenshot(page, "05-form-loaded");
 
     // Fill in contact information (in iframe context)
     console.log("📝 Filling in contact information...");
@@ -328,7 +328,7 @@ async function purchaseTicket(eventUrl) {
       console.log("⚠️  Last name field not found");
     }
 
-    await takeScreenshot(page, "06-after-name-fields");
+    // await takeScreenshot(page, "06-after-name-fields");
 
     // Look for final submit button (in iframe context)
     console.log("🔍 Looking for submit button...");
@@ -353,11 +353,11 @@ async function purchaseTicket(eventUrl) {
     }
 
     if (submitButton) {
-      await takeScreenshot(page, "07-ready-to-submit");
+      // await takeScreenshot(page, "07-ready-to-submit");
       console.log("🖱️  Clicking Register button...");
       await submitButton.click();
       await sleep(3000);
-      await takeScreenshot(page, "08-after-register-click");
+      // await takeScreenshot(page, "08-after-register-click");
       console.log("✅ Register button clicked!");
 
       // Keep browser open to see result
@@ -367,7 +367,7 @@ async function purchaseTicket(eventUrl) {
       }
     } else {
       console.log("⚠️  Submit button not found");
-      await takeScreenshot(page, "ERROR-no-submit-button");
+      // await takeScreenshot(page, "ERROR-no-submit-button");
     }
 
     console.log("✅ Automation complete! Check browser for final status.");
@@ -375,7 +375,7 @@ async function purchaseTicket(eventUrl) {
   } catch (error) {
     console.error("❌ Error during ticket purchase:", error.message);
     try {
-      await takeScreenshot(page, "ERROR-final");
+      // await takeScreenshot(page, "ERROR-final");
     } catch (screenshotError) {
       console.log("⚠️  Could not take error screenshot");
     }
