@@ -6,7 +6,7 @@ if [ -f .env ]; then
 fi
 
 # Configuration
-SEARCH_QUERY="Just added! Skate Session 2 from Vans Skate Space 198"
+SEARCH_QUERY="Just added! Skate Session"
 CHECK_INTERVAL=60  # seconds between checks
 PROCESSED_FILE="processed_emails.txt"
 
